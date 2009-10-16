@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<title>test</title>
+	</head>
+	<body>
+		<div id="user-info">
+			<% if current_user %>
+				<p>Inloggad som <%=h current_user.email %> | <%= link_to t(:logout).capitalize, logout_path %></p>
+			<% else %>
+				<p>
+					<%= link_to t(:login).capitalize, login_path %> |
+					<%= link_to t(:signup).capitalize, signup_path %>
+				</p>
+			<% end %>
+		</div>
+		<%= render :partial => "shared/feedback" %>
+		<%= yield %>
+	</body>
+</html>

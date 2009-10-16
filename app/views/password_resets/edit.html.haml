@@ -1,0 +1,10 @@
+%h1= t(:change_password).capitalize
+%p
+  = t(:change_password_info)
+- semantic_form_for(@user, :url => password_reset_path, :method => :put) do |form|
+  - form.inputs do
+    = form.input :password, :label => t(:password)
+    = form.input :password_confirmation, :label => t(:repeat_password)
+  - form.buttons do
+    = form.commit_button t(:change_password_and_log_in).capitalize
+    %li= link_to t(:cancel), root_url

@@ -1,0 +1,4 @@
+- semantic_form_for([:admin, @user], :html => { :method => :delete }) do |form|
+  - form.buttons do
+    = form.commit_button t(:delete).capitalize
+    %li= link_to t(:cancel), admin_users_path

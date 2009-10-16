@@ -1,0 +1,15 @@
+%h1= t(:have_you_forgotten_your_password).capitalize
+%p
+  = t(:password_reset_info)
+- form_tag("/password_resets/") do
+  %fieldset{ :class => "inputs" }
+    %ol
+      %li{ :class => "string" }
+        = label_tag :email
+        = text_field_tag :email, nil, { :size => "50" }
+  %fieldset{ :class => "buttons" }
+    %ol
+      %li{ :class => "commit" }
+        = submit_tag t(:reset_password)
+      %li
+        = link_to t(:cancel).capitalize, root_url()

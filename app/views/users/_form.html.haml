@@ -1,0 +1,8 @@
+- semantic_form_for(@user) do |form|
+  - form.inputs do
+    = form.input :email, :label => t(:email).capitalize
+    = form.input :password, :label => t(:password).capitalize
+    = form.input :password_confirmation, :label => t(:repeat_password).capitalize
+  - form.buttons do
+    = form.commit_button t(:sign_up).capitalize
+    %li= link_to t(:cancel), root_url
