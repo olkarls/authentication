@@ -8,7 +8,7 @@ class UserSessionsController < PublicController
     respond_to do |format|
       if @user_session.save
         flash[:success] = I18n.translate(:successful_login)
-        format.html { redirect_to root_url }
+        format.html { redirect_back_or_default(root_path) }
       else
         format.html { render :action => "new" }
       end

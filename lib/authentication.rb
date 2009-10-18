@@ -1,20 +1,36 @@
 module Authentication
   def self.included(base)
-    base.extend ClassMethods
-    puts "Included 'Authentication' into #{base}"
     base.helper_method :current_user
+    base.helper_method :has_authority
+  end
+  
+  def has_authority(role)
+    if current_user
+      needed_role = Role.find_by_name(role.to_s)
+      if current_user.role.level >= needed_role.level
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
+  end
+  
+  def authorize(role)
+    unless has_authority(role)
+      access_denied
+    end
+  end
+  
+  def access_denied
+    store_location
+    flash[:error] = t(:access_denied)
+    redirect_to login_path
   end
 
-  module ClassMethods
-    #helper_method :current_user
-  
-    #private
-  end
-
-    
-  
   private
-  
+
   def require_user
     unless current_user
       store_location
@@ -28,7 +44,7 @@ module Authentication
     if current_user
       store_location
       flash[:error] = I18n.translate(:require_no_user_error_msg)
-      #redirect_to root_url
+      redirect_to root_url
       return false
     end
   end
@@ -38,8 +54,9 @@ module Authentication
   end
 
   def redirect_back_or_default(default)
-    redirect_to(session[:return_to] || default)
+    to = (session[:return_to] || default)
     session[:return_to] = nil
+    redirect_to(to)
   end
   
   def current_user_session
